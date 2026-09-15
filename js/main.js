@@ -186,6 +186,31 @@ function setupAboutSlider() {
   const start = () => { clearInterval(timer); timer = setInterval(() => show(index + 1), 3600); };
   slider.addEventListener('mouseenter', () => clearInterval(timer));
   slider.addEventListener('mouseleave', start);
+
+  // Touch swipe support: swipe left for next, swipe right for previous.
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const SWIPE_THRESHOLD = 40;
+
+  slider.addEventListener('touchstart', (e) => {
+    clearInterval(timer);
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  slider.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+
+    // Only treat as a swipe if horizontal movement dominates (avoids
+    // hijacking vertical page scrolling on mobile).
+    if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) show(index + 1);
+      else show(index - 1);
+    }
+    start();
+  });
+
   start();
 }
 
