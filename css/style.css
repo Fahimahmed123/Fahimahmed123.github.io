@@ -343,6 +343,19 @@ footer.site-footer .wrap {
   .hero h1 { font-size: 2rem; max-width: 22ch; }
   .hero-photo-wrap { max-width: 100%; }
   .about-slider { max-width: 250px; height: 320px; }
+
+  footer.site-footer .wrap {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 22px 0;
+    gap: 16px;
+  }
+  footer.site-footer .wrap > span {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+  .footer-social { order: -1; gap: 12px; }
 }
 
 
